@@ -1,5 +1,21 @@
 # @aws-amplify/ui
 
+## 5.4.2
+
+### Patch Changes
+
+- [#3201](https://github.com/aws-amplify/amplify-ui/pull/3201) [`2912fe3af`](https://github.com/aws-amplify/amplify-ui/commit/2912fe3af6f29cde562a35e931bc2e3a0de470ed) Thanks [@ErikCH](https://github.com/ErikCH)! - Updated logic so users will now receive a code, when they are displayed the reset password page that asks for a code after signing in. This occurs when the users are imported into Cognito.
+
+- [#3238](https://github.com/aws-amplify/amplify-ui/pull/3238) [`ea1b10a2c`](https://github.com/aws-amplify/amplify-ui/commit/ea1b10a2c802b08ee019669ba442d7446f23bd05) Thanks [@wlee221](https://github.com/wlee221)! - fix(react): Manually add `overflow: clip` to remediate chrome 108 breaking change.
+
+  Ref: https://developer.chrome.com/blog/overflow-replaced-elements/
+
+## 5.4.1
+
+### Patch Changes
+
+- [#3153](https://github.com/aws-amplify/amplify-ui/pull/3153) [`db8f019a7`](https://github.com/aws-amplify/amplify-ui/commit/db8f019a7737c4762ff19c1b03c7c06625277989) Thanks [@joebuono](https://github.com/joebuono)! - fix(ui): Add missing Authenticator translations
+
 ## 5.4.0
 
 ### Minor Changes
