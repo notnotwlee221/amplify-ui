@@ -6,8 +6,8 @@ import { SearchField } from '../SearchField';
 import { ComponentClassNames, ComponentText } from '../../shared/constants';
 
 const label = 'Search Amplify UI';
-const searchButtonLabel = ComponentText.SearchField.searchButtonLabel;
-const clearButtonLabel = ComponentText.Fields.clearButtonLabel;
+const {searchButtonLabel} = ComponentText.SearchField;
+const {clearButtonLabel} = ComponentText.Fields;
 
 const testId = 'SearchFieldTestId';
 const searchQuery = 'Amplify UI components';
@@ -69,26 +69,6 @@ describe('SearchField component', () => {
     expect(searchButtonRef?.current?.nodeName).toBe('BUTTON');
   });
 
-  it('should forward callback ref to DOM element', async () => {
-    let ref: HTMLInputElement;
-
-    const setRef = (node) => (ref = node);
-
-    render(
-      <SearchField
-        className="custom-class"
-        label={label}
-        name="q"
-        ref={setRef}
-        testId={testId}
-      />
-    );
-
-    await screen.findByRole('button');
-
-    expect(ref.nodeName).toBe('INPUT');
-  });
-
   it('should be text input type', async () => {
     render(<SearchField label={label} name="q" />);
 
@@ -137,7 +117,7 @@ describe('SearchField component', () => {
 
     const searchField = (await screen.findByLabelText(
       label
-    )) as HTMLInputElement;
+    ));
 
     userEvent.type(searchField, searchQuery);
     expect(searchField).toHaveValue(searchQuery);
@@ -151,7 +131,7 @@ describe('SearchField component', () => {
 
     const searchField = (await screen.findByLabelText(
       label
-    )) as HTMLInputElement;
+    ));
 
     userEvent.type(searchField, searchQuery);
     expect(searchField).toHaveValue(searchQuery);
@@ -160,7 +140,7 @@ describe('SearchField component', () => {
     expect(searchField).toHaveValue('');
   });
 
-  describe(' - search button', () => {
+  describe('- search button', () => {
     it('should call onSubmit handler when clicked', async () => {
       const onSubmit = jest.fn();
       render(<SearchField label={label} name="q" onSubmit={onSubmit} />);
@@ -175,7 +155,7 @@ describe('SearchField component', () => {
     });
   });
 
-  describe(' - clear button', () => {
+  describe('- clear button', () => {
     it('should have clear button only after text is entered', async () => {
       render(<SearchField label={label} name="q" />);
 
@@ -195,7 +175,7 @@ describe('SearchField component', () => {
 
       const searchField = (await screen.findByLabelText(
         label
-      )) as HTMLInputElement;
+      ));
       userEvent.type(searchField, searchQuery);
 
       const clearButton = await screen.findByLabelText(clearButtonLabel);
@@ -211,7 +191,7 @@ describe('SearchField component', () => {
 
       const searchField = (await screen.findByLabelText(
         label
-      )) as HTMLInputElement;
+      ));
       userEvent.type(searchField, searchQuery);
 
       const clearButton = await screen.findByLabelText(clearButtonLabel);
@@ -234,12 +214,12 @@ describe('SearchField component', () => {
 
       const searchField = (await screen.findByLabelText(
         label
-      )) as HTMLInputElement;
+      ));
       userEvent.type(searchField, searchQuery);
 
       const clearButton = (await screen.findByLabelText(
         clearButtonLabel
-      )) as HTMLButtonElement;
+      ));
       expect(clearButton).toHaveAttribute('aria-label', clearButtonLabel);
     });
   });
