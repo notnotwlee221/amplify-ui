@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import { UploadDropZone } from '..';
 import { classNameModifier } from '../../../../../primitives/shared/utils';
 import { ComponentClassNames } from '../../../../../primitives';
+import { fileUploaderStrings } from '../../strings';
 
 describe('UploaderDrop', () => {
   it('exists', () => {
@@ -15,6 +16,7 @@ describe('UploaderDrop', () => {
         onDragOver={() => ''}
         onDragStart={() => ''}
         onDrop={() => ''}
+        strings={fileUploaderStrings}
       />
     );
 
@@ -29,6 +31,7 @@ describe('UploaderDrop', () => {
         onDragOver={() => ''}
         onDragStart={() => ''}
         onDrop={() => ''}
+        strings={fileUploaderStrings}
       />
     );
     const activeClass = container.getElementsByClassName(

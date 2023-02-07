@@ -5,6 +5,7 @@ import { UploadPreviewer } from '..';
 
 import { FileStatus, FileStatuses } from '../../types';
 import { ComponentClassNames } from '../../../../../primitives';
+import { fileUploaderStrings } from '../../strings';
 
 const fakeFile = new File(['hello'], 'hello.png', { type: 'image/png' });
 const fakeFile2 = new File(['goodbye'], 'goodbye.png', {
@@ -38,6 +39,7 @@ const commonProps = {
   maxFileCount: 10,
   onClear: () => null,
   onFileClick: () => null,
+  strings: fileUploaderStrings,
 };
 
 describe('UploadPreviewer', () => {

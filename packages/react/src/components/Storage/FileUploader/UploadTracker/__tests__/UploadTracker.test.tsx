@@ -2,6 +2,7 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { UploadTracker } from '..';
+import { fileUploaderStrings } from '../..';
 const fakeFile = new File(['hello'], 'hello.png', { type: 'image/png' });
 
 describe('UploadTracker', () => {
@@ -20,6 +21,7 @@ describe('UploadTracker', () => {
         onSaveEdit={() => null}
         onStartEdit={() => null}
         onCancelEdit={() => null}
+        strings={fileUploaderStrings}
         showImage
       />
     );
@@ -42,6 +44,7 @@ describe('UploadTracker', () => {
         onSaveEdit={() => null}
         onStartEdit={() => null}
         onCancelEdit={() => null}
+        strings={fileUploaderStrings}
         showImage
       />
     );
@@ -66,6 +69,7 @@ describe('UploadTracker', () => {
         onSaveEdit={() => null}
         onStartEdit={() => null}
         onCancelEdit={() => null}
+        strings={fileUploaderStrings}
         showImage
       />
     );
@@ -90,6 +94,7 @@ describe('UploadTracker', () => {
         onSaveEdit={() => null}
         onStartEdit={() => null}
         onCancelEdit={() => null}
+        strings={fileUploaderStrings}
         showImage
       />
     );
@@ -114,6 +119,7 @@ describe('UploadTracker', () => {
         onSaveEdit={() => null}
         onStartEdit={() => null}
         onCancelEdit={() => null}
+        strings={fileUploaderStrings}
         showImage
       />
     );
@@ -139,11 +145,12 @@ describe('UploadTracker', () => {
         onSaveEdit={() => null}
         onStartEdit={() => null}
         onCancelEdit={() => null}
+        strings={fileUploaderStrings}
         showImage
       />
     );
 
-    const button = await screen.getByRole('button', { name: 'pause' });
+    const button = await screen.getByRole('button', { name: 'Pause' });
 
     expect(button).toBeVisible();
   });

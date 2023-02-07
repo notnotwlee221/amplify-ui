@@ -188,7 +188,7 @@ describe('File Uploader', () => {
 
     render(<FileUploader {...commonProps} isPreviewerVisible />);
 
-    const button = await screen.findByText('pause');
+    const button = await screen.findByText('Pause');
     fireEvent.click(button);
 
     expect(uploadTaskSpy).toBeCalled();

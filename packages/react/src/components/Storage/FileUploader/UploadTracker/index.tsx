@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { translate } from '@aws-amplify/ui';
 import { humanFileSize } from '@aws-amplify/ui';
 import { TrackerProps } from '../types';
 import {
@@ -34,6 +33,7 @@ export function UploadTracker({
   percentage,
   isResumable,
   showImage,
+  strings,
 }: TrackerProps): JSX.Element {
   const [tempName, setTempName] = React.useState(name);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -53,8 +53,7 @@ export function UploadTracker({
 
   const showEditButton =
     fileState === null ||
-    (fileState === 'error' &&
-      errorMessage === translate('Extension not allowed'));
+    (fileState === 'error' && errorMessage === strings.extensionNotAllowed);
 
   const DisplayView = useCallback(
     () => (
@@ -102,13 +101,13 @@ export function UploadTracker({
         if (!isResumable) return null;
         return (
           <Button onClick={onPause} size="small" variation="link">
-            {translate('pause')}
+            {strings.pause}
           </Button>
         );
       case 'paused':
         return (
           <Button onClick={onResume} size="small" variation="link">
-            {translate('Resume')}
+            {strings.resume}
           </Button>
         );
       case 'success':
@@ -142,6 +141,7 @@ export function UploadTracker({
     onStartEdit,
     showEditButton,
     tempName,
+    strings,
   ]);
 
   if (!file) return null;
@@ -199,6 +199,7 @@ export function UploadTracker({
         fileState={fileState}
         errorMessage={errorMessage}
         percentage={percentage}
+        strings={strings}
       />
     </View>
   );

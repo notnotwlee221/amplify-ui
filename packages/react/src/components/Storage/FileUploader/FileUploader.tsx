@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { UploadTask, Storage } from '@aws-amplify/storage';
-import { translate, uploadFile, isValidExtension } from '@aws-amplify/ui';
+import { uploadFile, isValidExtension } from '@aws-amplify/ui';
 import { Logger } from 'aws-amplify';
 
 import {
@@ -14,6 +14,7 @@ import { UploadPreviewer } from './UploadPreviewer';
 import { UploadDropZone } from './UploadDropZone';
 import { UploadTracker } from './UploadTracker';
 import { FileState, FileUploaderProps } from './types';
+import { fileUploaderStrings } from './strings';
 
 const isUploadTask = (value: unknown): value is UploadTask =>
   typeof (value as UploadTask)?.resume === 'function';
@@ -33,6 +34,7 @@ export function FileUploader({
   accessLevel,
   variation = 'drop',
   isResumable = false,
+  strings: _strings,
   ...rest
 }: FileUploaderProps): JSX.Element {
   if (!acceptedFileTypes || !accessLevel) {
@@ -40,6 +42,14 @@ export function FileUploader({
       'FileUploader requires accessLevel and acceptedFileTypes props'
     );
   }
+  // should probably type this as Required
+  // and make components we pass this to only accept the required version
+  const strings = useMemo(() => {
+    return {
+      ...fileUploaderStrings,
+      ..._strings,
+    };
+  }, [_strings]);
 
   // File Previewer loading state
   const [isLoading, setLoading] = useState(false);
@@ -132,7 +142,7 @@ export function FileUploader({
           const updatedStatus = {
             ...prevStatus,
             fileState: 'error' as FileState,
-            fileErrors: translate(err.toString()),
+            fileErrors: strings.error(err.toString()),
           };
 
           prevFileStatuses[index] = updatedStatus;
@@ -143,7 +153,7 @@ export function FileUploader({
         if (typeof onError === 'function') onError(err);
       };
     },
-    [onError, setFileStatuses]
+    [onError, setFileStatuses, strings]
   );
 
   const onPause = useCallback(
@@ -275,15 +285,16 @@ export function FileUploader({
           ...status,
           name: value,
           fileState: !validExtension ? 'error' : null,
-          fileErrors: validExtension
-            ? undefined
-            : translate('Extension not allowed'),
+          fileErrors: validExtension ? undefined : strings.extensionNotAllowed,
+          // should we be keeping the string in our internal state
+          // or instead having a fileError enum and grabbing the right string
+          // where it is used?
         };
 
         setFileStatuses(newFileStatuses);
       };
     },
-    [fileStatuses, setFileStatuses]
+    [fileStatuses, setFileStatuses, strings.extensionNotAllowed]
   );
 
   const updateFileState = useCallback(
@@ -351,7 +362,7 @@ export function FileUploader({
           }}
           size="small"
         >
-          {translate('Browse files')}
+          {strings.browseFiles}
         </UploadButton>
         <VisuallyHidden>
           <input
@@ -365,17 +376,22 @@ export function FileUploader({
         </VisuallyHidden>
       </>
     ),
-    [isLoading, onFileChange, hasMultipleFiles, accept]
+    [isLoading, onFileChange, hasMultipleFiles, accept, strings.browseFiles]
   );
 
   if (showPreviewer) {
     return (
       <UploadPreviewer
         dropZone={
-          <UploadDropZone {...dropZoneProps} inDropZone={inDropZone}>
+          <UploadDropZone
+            strings={strings}
+            {...dropZoneProps}
+            inDropZone={inDropZone}
+          >
             {uploadButton}
           </UploadDropZone>
         }
+        strings={strings}
         fileStatuses={fileStatuses}
         isLoading={isLoading}
         isSuccessful={isSuccessful}
@@ -402,6 +418,7 @@ export function FileUploader({
             onStartEdit={onStartEdit(index)}
             percentage={status.percentage}
             isResumable={isResumable}
+            strings={strings}
           />
         ))}
       </UploadPreviewer>
@@ -412,7 +429,11 @@ export function FileUploader({
     return uploadButton;
   } else {
     return (
-      <UploadDropZone {...dropZoneProps} inDropZone={inDropZone}>
+      <UploadDropZone
+        strings={strings}
+        {...dropZoneProps}
+        inDropZone={inDropZone}
+      >
         {uploadButton}
       </UploadDropZone>
     );
